@@ -106,6 +106,11 @@ All endpoints accept any HTTP method. Additionally, it includes features not fou
 - `/xml`: Returns a sample XML document
 - `/html`: Returns a sample HTML document
 - `/json`: Returns a sample JSON document
+- `/csv/:name/:limit`: Returns a sample CSV dataset
+  - `/csv` defaults to `customers` with a `limit` of `100`
+  - `name` can be `customers`, `leads`, `organizations`, `people`, or `products`
+  - `limit` can be `100` or `1000`
+  - Sample CSV files are sourced from [datablist/sample-csv-files](https://github.com/datablist/sample-csv-files). Thanks to the project for making them publicly available.
 - `/gzip`: Returns a gzip-encoded response
 - `/brotli`: Returns a brotli-encoded response
 - `/deflate`: Returns a deflate-encoded response
