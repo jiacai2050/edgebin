@@ -137,6 +137,27 @@ describe("Response formats", () => {
     expect(response.status).toBe(200);
     expect(response.headers.get("Content-Type")).toMatch(/application\/xml/);
   });
+
+  it("csv default route", async () => {
+    const response = await do_request(`${ROOT}/csv`);
+    expect(response.status).toBe(200);
+    expect(response.headers.get("Content-Type")).toMatch(/text\/csv/);
+    const text = await response.text();
+    expect(text).toContain("Index,Customer Id,First Name,Last Name,Company,City,Country,Phone 1,Phone 2,Email,Subscription Date,Website");
+  });
+
+  it("csv dynamic asset path", async () => {
+    const response = await do_request(`${ROOT}/csv/customers/100`);
+    expect(response.status).toBe(200);
+    expect(response.headers.get("Content-Type")).toMatch(/text\/csv/);
+    const text = await response.text();
+    expect(text).toContain("Index,Customer Id,First Name,Last Name,Company,City,Country,Phone 1,Phone 2,Email,Subscription Date,Website");
+  });
+
+  it("csv dynamic asset path not found", async () => {
+    const response = await do_request(`${ROOT}/csv/not-exist/100`);
+    expect(response.status).toBe(404);
+  });
 });
 
 describe("Dynamic data", () => {

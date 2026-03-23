@@ -153,6 +153,16 @@ async function handle(req, env, ctx) {
       return handleCache(parts, searchParams, req);
 
     // Response formats: Testing different response formats
+    case "csv": {
+      if (parts.length === 1) {
+        return env.ASSETS.fetch(new URL("/csv/customers-100.csv", req.url));
+      }
+      if (parts.length !== 3) {
+        break;
+      }
+      const [, name, limit] = parts;
+      return env.ASSETS.fetch(new URL(`/csv/${name}-${limit}.csv`, req.url));
+    }
     case "encoding": {
       const charset = parts[1];
       switch (charset) {
